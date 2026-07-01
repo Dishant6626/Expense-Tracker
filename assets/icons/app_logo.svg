@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <!-- Main gradient: brand purple -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6C63FF;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#9C63FF;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Inner glow gradient -->
+    <radialGradient id="glowGrad" cx="50%" cy="40%" r="55%">
+      <stop offset="0%" style="stop-color:#FFFFFF;stop-opacity:0.25" />
+      <stop offset="100%" style="stop-color:#FFFFFF;stop-opacity:0" />
+    </radialGradient> ̰
+
+    <!-- Coin shine gradient -->
+    <linearGradient id="shineGrad" x1="0%" y1="0%" x2="60%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFFFFF;stop-opacity:0.18" />
+      <stop offset="100%" style="stop-color:#FFFFFF;stop-opacity:0" />
+    </linearGradient>
+
+    <!-- Drop shadow filter -->
+    <filter id="shadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#6C63FF" flood-opacity="0.35"/>
+    </filter>
+
+    <!-- Sparkle glow -->
+    <filter id="sparkleGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Rounded square container (app icon shape) -->
+  <rect x="10" y="10" width="180" height="180" rx="42" ry="42"
+        fill="url(#bgGrad)" filter="url(#shadow)"/>
+
+  <!-- Inner glow overlay -->
+  <rect x="10" y="10" width="180" height="180" rx="42" ry="42"
+        fill="url(#glowGrad)"/>
+
+  <!-- Shine overlay (top-left highlight) -->
+  <rect x="10" y="10" width="180" height="180" rx="42" ry="42"
+        fill="url(#shineGrad)"/>
+
+  <!-- Coin circle: soft white with low opacity -->
+  <circle cx="100" cy="96" r="52"
+          fill="none"
+          stroke="#FFFFFF"
+          stroke-width="3"
+          stroke-opacity="0.25"/>
+
+  <!-- Inner coin ring: thinner -->
+  <circle cx="100" cy="96" r="44"
+          fill="none"
+          stroke="#FFFFFF"
+          stroke-width="1.2"
+          stroke-opacity="0.12"/>
+
+  <!-- Coin face: subtle fill -->
+  <circle cx="100" cy="96" r="51"
+          fill="#FFFFFF"
+          fill-opacity="0.07"/>
+
+  <!-- ── AI Spark / Bolt inside coin ── -->
+  <!-- Main lightning bolt — clean geometric -->
+  <path d="M108 62 L88 98 L102 98 L92 134 L118 91 L103 91 Z"
+        fill="#FFFFFF"
+        fill-opacity="0.95"
+        filter="url(#sparkleGlow)"/>
+
+  <!-- Subtle inner highlight on bolt -->
+  <path d="M108 62 L95 91 L103 91 Z"
+        fill="#FFFFFF"
+        fill-opacity="0.5"/>
+
+  <!-- ── Sparkle dots around bolt ── -->
+  <!-- Top right sparkle -->
+  <circle cx="122" cy="70" r="3.5" fill="#FFFFFF" fill-opacity="0.7"/>
+  <line x1="122" y1="63" x2="122" y2="67" stroke="#FFFFFF" stroke-width="1.5" stroke-opacity="0.5" stroke-linecap="round"/>
+  <line x1="122" y1="73" x2="122" y2="77" stroke="#FFFFFF" stroke-width="1.5" stroke-opacity="0.5" stroke-linecap="round"/>
+  <line x1="115" y1="70" x2="119" y2="70" stroke="#FFFFFF" stroke-width="1.5" stroke-opacity="0.5" stroke-linecap="round"/>
+  <line x1="125" y1="70" x2="129" y2="70" stroke="#FFFFFF" stroke-width="1.5" stroke-opacity="0.5" stroke-linecap="round"/>
+
+  <!-- Bottom left sparkle -->
+  <circle cx="80" cy="122" r="2.5" fill="#FFFFFF" fill-opacity="0.55"/>
+  <line x1="80" y1="116.5" x2="80" y2="119.5" stroke="#FFFFFF" stroke-width="1.2" stroke-opacity="0.4" stroke-linecap="round"/>
+  <line x1="80" y1="124.5" x2="80" y2="127.5" stroke="#FFFFFF" stroke-width="1.2" stroke-opacity="0.4" stroke-linecap="round"/>
+  <line x1="74.5" y1="122" x2="77.5" y2="122" stroke="#FFFFFF" stroke-width="1.2" stroke-opacity="0.4" stroke-linecap="round"/>
+  <line x1="82.5" y1="122" x2="85.5" y2="122" stroke="#FFFFFF" stroke-width="1.2" stroke-opacity="0.4" stroke-linecap="round"/>
+
+  <!-- Tiny dot accent top-left of coin -->
+  <circle cx="76" cy="75" r="1.8" fill="#FFFFFF" fill-opacity="0.4"/>
+
+  <!-- App name text: "expense" small + "AI" bold -->
+  <!-- "expense" label below coin -->
+  <text x="100" y="163"
+        font-family="'Helvetica Neue', Helvetica, Arial, sans-serif"
+        font-size="13"
+        font-weight="500"
+        letter-spacing="3.5"
+        fill="#FFFFFF"
+        fill-opacity="0.75"
+        text-anchor="middle">EXPENSE</text>
+
+  <!-- "AI" bold accent -->
+  <text x="100" y="181"
+        font-family="'Helvetica Neue', Helvetica, Arial, sans-serif"
+        font-size="16"
+        font-weight="800"
+        letter-spacing="6"
+        fill="#FFFFFF"
+        fill-opacity="0.95"
+        text-anchor="middle">AI</text>
+</svg>

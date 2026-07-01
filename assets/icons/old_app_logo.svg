@@ -1,0 +1,59 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6C63FF"/>
+      <stop offset="100%" stop-color="#9C63FF"/>
+    </linearGradient>
+    <linearGradient id="walletGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#F0EFFF"/>
+    </linearGradient>
+    <linearGradient id="sparkleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFE27A"/>
+      <stop offset="100%" stop-color="#FFB23A"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="512" height="512" rx="112" fill="url(#bgGrad)"/>
+
+  <!-- Subtle background circle accent -->
+  <circle cx="400" cy="120" r="90" fill="#FFFFFF" opacity="0.06"/>
+  <circle cx="90" cy="420" r="70" fill="#FFFFFF" opacity="0.06"/>
+
+  <!-- Wallet body -->
+  <rect x="116" y="170" width="280" height="210" rx="28" fill="url(#walletGrad)"/>
+
+  <!-- Wallet flap shadow -->
+  <rect x="116" y="170" width="280" height="60" rx="28" fill="#FFFFFF" opacity="0.5"/>
+
+  <!-- Wallet front pocket line -->
+  <path d="M116 230 H396" stroke="#D9D4FF" stroke-width="4"/>
+
+  <!-- Card/clasp button -->
+  <circle cx="356" cy="275" r="26" fill="#6C63FF"/>
+  <circle cx="356" cy="275" r="26" fill="url(#bgGrad)"/>
+
+  <!-- Dollar/rupee mark inside clasp -->
+  <text x="356" y="286" font-family="Arial, sans-serif" font-size="28" font-weight="700" fill="#FFFFFF" text-anchor="middle">₹</text>
+
+  <!-- Receipt peeking out top -->
+  <rect x="156" y="110" width="120" height="100" rx="10" fill="#FFFFFF"/>
+  <rect x="156" y="110" width="120" height="100" rx="10" fill="none" stroke="#E4E1FF" stroke-width="3"/>
+  <!-- Receipt lines -->
+  <rect x="172" y="135" width="88" height="6" rx="3" fill="#C9C3FF"/>
+  <rect x="172" y="152" width="68" height="6" rx="3" fill="#C9C3FF"/>
+  <rect x="172" y="169" width="78" height="6" rx="3" fill="#C9C3FF"/>
+  <rect x="172" y="186" width="50" height="6" rx="3" fill="#FFB23A"/>
+
+  <!-- AI Sparkle (top right, overlapping wallet) -->
+  <g transform="translate(372, 130)">
+    <path d="M30 0 L37 23 L60 30 L37 37 L30 60 L23 37 L0 30 L23 23 Z" fill="url(#sparkleGrad)"/>
+    <path d="M30 12 L34 26 L48 30 L34 34 L30 48 L26 34 L12 30 L26 26 Z" fill="#FFFFFF" opacity="0.5"/>
+  </g>
+
+  <!-- Small sparkle accent -->
+  <g transform="translate(120, 340)">
+    <path d="M14 0 L17.5 10.5 L28 14 L17.5 17.5 L14 28 L10.5 17.5 L0 14 L10.5 10.5 Z" fill="#FFFFFF" opacity="0.85"/>
+  </g>
+</svg>

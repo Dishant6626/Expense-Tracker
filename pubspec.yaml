@@ -1,0 +1,76 @@
+name: expense_tracker
+description: AI-Powered Expense Tracker with Receipt Scanning & Spending Insights
+
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # State Management
+  flutter_bloc: ^8.1.5
+  bloc: ^8.1.4
+
+  # Immutable State
+  built_value: ^8.9.2
+  built_collection: ^5.1.1
+
+  # DI
+  kiwi: ^4.1.0
+
+  # Reactive
+  rxdart: ^0.27.7
+
+  # Network
+  dio: ^5.4.3+1
+
+  # Local Storage
+  hive_flutter: ^1.1.0
+  hive: ^2.2.3
+
+  # Functional
+  dartz: ^0.10.1
+
+  # UI
+  flutter_screenutil: ^5.9.3
+  flutter_svg: ^2.0.10+1
+  lottie: ^3.1.2
+  image_picker: ^1.1.2
+  intl: ^0.19.0
+  fl_chart: ^0.68.0
+
+  # Utils
+  uuid: ^4.4.0
+  path_provider: ^2.1.3
+  permission_handler: ^11.3.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  built_value_generator: ^8.9.2
+  build_runner: ^2.4.9
+  kiwi_generator: ^4.1.0
+  hive_generator: ^2.0.1
+  flutter_lints: ^3.0.0
+  flutter_native_splash: ^2.4.1
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/icons/
+#    - assets/animations/
+    - assets/images/
+
+# Native (OS-level) splash shown before Flutter engine paints first frame.
+# Run: flutter pub run flutter_native_splash:create
+flutter_native_splash:
+  color: "#6C63FF"
+  image: assets/icons/app_logo.svg
+  android_12:
+    color: "#6C63FF"
+    image: assets/icons/app_logo.svg
+  web: false
