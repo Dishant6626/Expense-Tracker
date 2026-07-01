@@ -1,5 +1,6 @@
 // lib/features/splash/screens/splash_screen.dart
 
+import 'package:expense_tracker/core/constants/image_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -20,7 +21,6 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends BaseState<SplashScreenBloc, SplashScreen>
     with TickerProviderStateMixin {
   late final AnimationController _logoController;
-  late final AnimationController _sparkleController;
   late final Animation<double> _logoScale;
   late final Animation<double> _logoFade;
   late final Animation<double> _textFade;
@@ -35,10 +35,6 @@ class _SplashScreenState extends BaseState<SplashScreenBloc, SplashScreen>
       duration: const Duration(milliseconds: 900),
     );
 
-    _sparkleController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 1400),
-    )..repeat(reverse: true);
 
     _logoScale = Tween<double>(begin: 0.6, end: 1.0).animate(
       CurvedAnimation(
@@ -78,7 +74,6 @@ class _SplashScreenState extends BaseState<SplashScreenBloc, SplashScreen>
   @override
   void dispose() {
     _logoController.dispose();
-    _sparkleController.dispose();
     super.dispose();
   }
 
@@ -119,7 +114,6 @@ class _SplashScreenState extends BaseState<SplashScreenBloc, SplashScreen>
               data: data,
               bloc: bloc,
               logoController: _logoController,
-              sparkleController: _sparkleController,
               logoScale: _logoScale,
               logoFade: _logoFade,
               textFade: _textFade,
@@ -137,7 +131,6 @@ class _Body extends StatelessWidget {
     required this.data,
     required this.bloc,
     required this.logoController,
-    required this.sparkleController,
     required this.logoScale,
     required this.logoFade,
     required this.textFade,
@@ -147,7 +140,6 @@ class _Body extends StatelessWidget {
   final SplashScreenState data;
   final SplashScreenBloc bloc;
   final AnimationController logoController;
-  final AnimationController sparkleController;
   final Animation<double> logoScale;
   final Animation<double> logoFade;
   final Animation<double> textFade;
@@ -161,7 +153,6 @@ class _Body extends StatelessWidget {
       default:
         return _MainContent(
           logoController: logoController,
-          sparkleController: sparkleController,
           logoScale: logoScale,
           logoFade: logoFade,
           textFade: textFade,
@@ -174,7 +165,6 @@ class _Body extends StatelessWidget {
 class _MainContent extends StatelessWidget {
   const _MainContent({
     required this.logoController,
-    required this.sparkleController,
     required this.logoScale,
     required this.logoFade,
     required this.textFade,
@@ -182,7 +172,6 @@ class _MainContent extends StatelessWidget {
   });
 
   final AnimationController logoController;
-  final AnimationController sparkleController;
   final Animation<double> logoScale;
   final Animation<double> logoFade;
   final Animation<double> textFade;
@@ -230,7 +219,7 @@ class _MainContent extends StatelessWidget {
                       ),
                     );
                   },
-                  child: _AnimatedLogo(sparkleController: sparkleController),
+                  child: const _AppLogo(),
                 ),
                 SizedBox(height: 28.h),
                 SlideTransition(
@@ -292,126 +281,13 @@ class _MainContent extends StatelessWidget {
   }
 }
 
-class _AnimatedLogo extends StatelessWidget {
-  const _AnimatedLogo({required this.sparkleController});
-  final AnimationController sparkleController;
+class _AppLogo extends StatelessWidget {
+  const _AppLogo();
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 140.w,
-      height: 140.w,
-      child: Stack(
-        clipBehavior: Clip.none,
-        children: [
-          // Wallet card
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(32.r),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.15),
-                  blurRadius: 30,
-                  offset: const Offset(0, 12),
-                ),
-              ],
-            ),
-          ),
-          // Receipt peeking from top
-          Positioned(
-            top: 18.h,
-            left: 20.w,
-            child: Container(
-              width: 56.w,
-              height: 46.h,
-              decoration: BoxDecoration(
-                color: const Color(0xFFF0EFFF),
-                borderRadius: BorderRadius.circular(8.r),
-                border: Border.all(color: const Color(0xFFE4E1FF), width: 1.5),
-              ),
-              padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  _ReceiptLine(width: 36.w, color: const Color(0xFFC9C3FF)),
-                  _ReceiptLine(width: 28.w, color: const Color(0xFFC9C3FF)),
-                  _ReceiptLine(width: 20.w, color: const Color(0xFFFFB23A)),
-                ],
-              ),
-            ),
-          ),
-          // Currency clasp
-          Positioned(
-            bottom: 26.h,
-            right: 22.w,
-            child: Container(
-              width: 38.w,
-              height: 38.w,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                gradient: LinearGradient(
-                  colors: [Color(0xFF6C63FF), Color(0xFF9C63FF)],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-              ),
-              alignment: Alignment.center,
-              child: Text(
-                '₹',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18.sp,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ),
-          ),
-          // Pulsing AI sparkle
-          Positioned(
-            top: -10.h,
-            right: -10.w,
-            child: AnimatedBuilder(
-              animation: sparkleController,
-              builder: (context, child) {
-                final scale = 0.85 + (sparkleController.value * 0.3);
-                final opacity = 0.7 + (sparkleController.value * 0.3);
-                return Transform.scale(
-                  scale: scale,
-                  child: Opacity(opacity: opacity, child: child),
-                );
-              },
-              child: Icon(
-                Icons.auto_awesome,
-                color: const Color(0xFFFFB23A),
-                size: 32.sp,
-                shadows: [
-                  Shadow(color: Colors.black.withOpacity(0.15), blurRadius: 8),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _ReceiptLine extends StatelessWidget {
-  const _ReceiptLine({required this.width, required this.color});
-  final double width;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: width,
-      height: 4.h,
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(2.r),
-      ),
+      child: Image.asset(ImageConstants.appLogo, width: 200, height: 200,),
     );
   }
 }

@@ -69,8 +69,8 @@ flutter:
 # Run: flutter pub run flutter_native_splash:create
 flutter_native_splash:
   color: "#6C63FF"
-  image: assets/icons/app_logo.svg
+  image: assets/images/app_logo.png
   android_12:
     color: "#6C63FF"
-    image: assets/icons/app_logo.svg
+    image: assets/images/app_logo.png
   web: false
