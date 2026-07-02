@@ -27,7 +27,7 @@ class DevConfig extends EnvConfig {
 
   @override
   // Replace with your actual Gemini API key
-  String get geminiApiKey => 'YOUR_GEMINI_API_KEY';
+  String get geminiApiKey => 'AIzaSyAPzPNyf2znz19MHAsX2tYy6vEV6cpS3dU';
 
   @override
   bool get useRestApi => true;
@@ -38,7 +38,7 @@ class ProdConfig extends EnvConfig {
   String get apiHost => 'https://api.example.com';
 
   @override
-  String get geminiApiKey => 'YOUR_GEMINI_API_KEY';
+  String get geminiApiKey => 'AIzaSyAPzPNyf2znz19MHAsX2tYy6vEV6cpS3dU';
 
   @override
   bool get useRestApi => true;

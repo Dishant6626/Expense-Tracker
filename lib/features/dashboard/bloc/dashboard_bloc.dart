@@ -5,10 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/base/base_bloc.dart';
 import '../../../core/base/event_bus.dart';
-import '../../../core/constants/app_constants.dart';
+import '../../ai_insights/repository/ai_insights_repository.dart';
 import '../../expense/models/expense_model.dart';
 import '../../expense/repository/expense_repository.dart';
-import '../../ai_insights/repository/ai_insights_repository.dart';
 import 'dashboard_state.dart';
 
 class DashboardBloc extends BaseBloc<DashboardEvent, DashboardState> {
@@ -36,30 +35,37 @@ class DashboardBloc extends BaseBloc<DashboardEvent, DashboardState> {
         ..isDeleting = false)
       .build();
 
-  Future<void> _onLoad(LoadDashboardEvent event, Emitter<DashboardState> emit) async {
+  Future<void> _onLoad(
+    LoadDashboardEvent event,
+    Emitter<DashboardState> emit,
+  ) async {
     emit(state.rebuild((b) => b..state = ScreenState.loading));
     await _loadData(emit);
   }
 
-  Future<void> _onRefresh(RefreshDashboardEvent event, Emitter<DashboardState> emit) async {
+  Future<void> _onRefresh(
+    RefreshDashboardEvent event,
+    Emitter<DashboardState> emit,
+  ) async {
     await _loadData(emit);
   }
 
   Future<void> _loadData(Emitter<DashboardState> emit) async {
     try {
       final stats = await _insightsRepo.getDashboardStats();
-      final expenses = stats['recentExpenses'] as List<ExpenseModel>;
-      final categoryTotals = stats['categoryTotals'] as Map<ExpenseCategory, double>;
 
-      final catMap = <String, double>{};
-      categoryTotals.forEach((k, v) => catMap[k.label] = v);
+      // Fix: key is now 'allExpenses' (full list) not 'recentExpenses'
+      final expenses = stats['allExpenses'] as List<ExpenseModel>;
+
+      // Fix: categoryTotals is already Map<String, double> from the repo
+      final categoryTotals = stats['categoryTotals'] as Map<String, double>;
 
       emit(state.rebuild((b) => b
         ..state = expenses.isEmpty ? ScreenState.empty : ScreenState.content
         ..expenses = ListBuilder(expenses)
         ..totalAmount = stats['total'] as double
         ..thisMonthAmount = stats['thisMonth'] as double
-        ..categoryTotals = MapBuilder(catMap)
+        ..categoryTotals = MapBuilder(categoryTotals)
         ..errorMessage = null));
     } catch (e) {
       emit(state.rebuild((b) => b
@@ -68,12 +74,16 @@ class DashboardBloc extends BaseBloc<DashboardEvent, DashboardState> {
     }
   }
 
-  Future<void> _onDelete(DeleteExpenseEvent event, Emitter<DashboardState> emit) async {
+  Future<void> _onDelete(
+    DeleteExpenseEvent event,
+    Emitter<DashboardState> emit,
+  ) async {
     emit(state.rebuild((b) => b..isDeleting = true));
     try {
       await _expenseRepo.deleteExpense(event.expenseId);
       _eventBus.sendEvent(ExpenseDeletedEvent(expenseId: event.expenseId));
-      dispatchViewEvent(DisplayMessage(message: 'Expense deleted successfully'));
+      dispatchViewEvent(
+          DisplayMessage(message: 'Expense deleted successfully'));
       await _loadData(emit);
     } catch (e) {
       dispatchViewEvent(DisplayMessage(message: 'Failed to delete expense'));

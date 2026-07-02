@@ -6,7 +6,7 @@ import '../../../core/constants/app_constants.dart';
 part 'expense_model.g.dart';
 
 @HiveType(typeId: 0)
-class ExpenseModel extends HiveObject {
+class ExpenseModel {
   @HiveField(0)
   final String id;
 

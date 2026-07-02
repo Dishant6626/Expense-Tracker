@@ -1,6 +1,7 @@
 // lib/core/services/gemini_service.dart
 
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'package:dio/dio.dart';
 
@@ -21,7 +22,7 @@ class GeminiService {
   String get _apiKey => Environment().config.geminiApiKey;
   static const String _baseUrl =
       'https://generativelanguage.googleapis.com/v1beta/models';
-  static const String _model = 'gemini-1.5-flash';
+  static const String _model = 'gemini-2.0-flash';
 
   // ── Receipt scanning ────────────────────────────────────────────────────────
 
@@ -71,11 +72,12 @@ If this is not a receipt, set all fields to null and add "error": "Not a receipt
       );
 
       final text = response.data['candidates'][0]['content']['parts'][0]['text']
-          as String;
+      as String;
 
       return _parseReceiptResponse(text);
     } on DioException catch (e) {
       final statusCode = e.response?.statusCode;
+      log("message::${e.response}");
       if (statusCode == 429) {
         return ExtractedReceiptData.invalid('Rate limit exceeded. Try again later.');
       } else if (statusCode == 400) {

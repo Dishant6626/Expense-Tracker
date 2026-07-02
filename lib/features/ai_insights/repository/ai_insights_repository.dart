@@ -1,6 +1,5 @@
 // lib/features/ai_insights/repository/ai_insights_repository.dart
 
-import '../../../core/constants/app_constants.dart';
 import '../../../core/services/gemini_service.dart';
 import '../../../core/services/hive_storage_service.dart';
 import '../../expense/models/expense_model.dart';
@@ -13,10 +12,9 @@ class AiInsightsRepository {
   static const String _insightDateKey = 'insight_date';
 
   Future<String> generateInsights() async {
-    final expenses = await ExpenseRepository().getAllExpenses();
+    final expenses = await const ExpenseRepository().getAllExpenses();
     final insight = await GeminiService().generateSpendingInsights(expenses);
 
-    // Cache result
     final box = HiveStorageService().insightsBox;
     await box.put(_insightKey, insight);
     await box.put(_insightDateKey, DateTime.now().toIso8601String());
@@ -41,16 +39,27 @@ class AiInsightsRepository {
   }
 
   Future<Map<String, dynamic>> getDashboardStats() async {
-    final all = await ExpenseRepository().getAllExpenses();
-    final thisMonth = await ExpenseRepository().getThisMonthExpenses();
-    final categoryTotals = await ExpenseRepository().getCategoryTotals();
+    final all = await const ExpenseRepository().getAllExpenses();
+
+    final now = DateTime.now();
+    final thisMonth = all
+        .where(
+          (e) => e.date.month == now.month && e.date.year == now.year,
+        )
+        .toList();
+
+    final categoryTotals = <String, double>{};
+    for (final e in all) {
+      categoryTotals[e.category.label] =
+          (categoryTotals[e.category.label] ?? 0) + e.amount;
+    }
 
     return {
       'total': all.fold<double>(0, (s, e) => s + e.amount),
       'thisMonth': thisMonth.fold<double>(0, (s, e) => s + e.amount),
       'count': all.length,
       'categoryTotals': categoryTotals,
-      'recentExpenses': all.take(5).toList(),
+      'allExpenses': all, // full list for display
     };
   }
 }
